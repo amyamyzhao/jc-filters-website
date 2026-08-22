@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jc-filters-supply.chatgpt.site'),
+  metadataBase: new URL('https://jc-filters-supply.glossy-pin-5885.chatgpt.site'),
   title: 'JC Filters | Replacement filters for global sellers',
   description: 'Pool cartridges, dryer lint filters, vacuum filters and dust bags with ready-stock dispatch, FBA support and custom packaging.',
   openGraph: {
