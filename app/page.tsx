@@ -8,48 +8,31 @@ export default function Home() {
       <section className="jc-hero">
         <div className="shell jc-hero-grid">
           <div className="jc-hero-copy">
-            <span className="eyebrow">REPLACEMENT FILTER MANUFACTURER</span>
-            <h1>Filters ready for your <em>next restock.</em></h1>
-            <p>Four focused replacement-filter ranges for online sellers, importers and distributors—with ready stock, FBA preparation and custom packing support.</p>
+            <span className="eyebrow">YOUR TRUSTED FILTER MANUFACTURER</span>
+            <h1>Ready-stock replacement filters for <em>Amazon sellers.</em></h1>
+            <p>Restock pool, appliance, vacuum and dryer filter SKUs with 24-hour dispatch on eligible stock orders, FBA preparation and custom packaging support.</p>
             <div className="hero-actions">
-              <Link className="btn" href="#product-categories">Explore categories <span>→</span></Link>
-              <a className="text-link" href={whatsappLink("Hello, I would like to discuss a replacement filter sourcing project.")} target="_blank" rel="noopener noreferrer">Send your part list <span>↗</span></a>
+              <a className="btn" href={whatsappLink("Hello, I sell on Amazon and would like to check ready stock for replacement filters.")} target="_blank" rel="noopener noreferrer">Check ready stock <span>↗</span></a>
+              <Link className="text-link" href="#product-categories">Browse filter programs <span>→</span></Link>
             </div>
             <div className="jc-capability-row" aria-label="Supply capabilities">
-              <span><b>24H*</b><small>Ready-stock dispatch</small></span>
-              <span><b>FBA</b><small>Prep support</small></span>
-              <span><b>OEM</b><small>Custom packing</small></span>
+              <span><b>READY STOCK</b><small>Confirmed by SKU</small></span>
+              <span><b>24H*</b><small>Eligible dispatch</small></span>
+              <span><b>FBA + OEM</b><small>Prep &amp; custom packing</small></span>
             </div>
           </div>
 
-          <div className="jc-hero-visual" aria-label="JC replacement filter collections">
-            <div className="hero-catalog-header">
-              <span>READY-STOCK PRODUCT PROGRAMS</span>
-              <b>04 focused categories</b>
+          <div className="jc-hero-visual stock-hero-visual" aria-label="Ready stock of JC replacement filters">
+            <img src="/assets/jc/ready-stock.jpg" alt="Large ready stock of replacement filter cartridges prepared for fast replenishment" />
+            <div className="stock-hero-badge"><span>READY STOCK</span><b>FAST RESTOCKING</b></div>
+            <div className="stock-hero-caption">
+              <div>
+                <span>IN-STOCK SUPPLY / CONFIRMED BY SKU</span>
+                <b>Stock ready for your next replenishment.</b>
+                <small>Pool &amp; Spa · Appliance · Vacuum · Dryer</small>
+              </div>
+              <a href={whatsappLink("Hello, I would like to send my SKU list and check your ready stock.")} target="_blank" rel="noopener noreferrer">Send SKU list <i>↗</i></a>
             </div>
-            <div className="hero-product-board">
-              <Link className="hero-product-card hero-product-pool" href="/products/pool-and-spa-filters">
-                <img src="/assets/jc/pool-collection.jpg" alt="Pool and spa replacement filter collection" />
-                <span className="hero-product-code">01 / WATER</span>
-                <div className="hero-product-label"><b>Pool &amp; Spa Filters</b><small>Pool cartridges · spa filters</small></div>
-              </Link>
-              <Link className="hero-product-card hero-product-appliance" href="/products/appliance-filters">
-                <img src="/assets/jc/appliance-collection.jpg" alt="Air purifier and humidifier replacement filter collection" />
-                <span className="hero-product-code">02 / AIR</span>
-                <div className="hero-product-label"><b>Appliance Filters</b><small>Air purifier · humidifier</small></div>
-              </Link>
-              <Link className="hero-product-card hero-product-vacuum" href="/products/vacuum-filters-and-dust-bags">
-                <img src="/assets/jc/vacuum-filter-collection.jpg" alt="Vacuum replacement HEPA filters and filter sets" />
-                <span className="hero-product-code">03 / FLOOR CARE</span>
-                <div className="hero-product-label"><b>Vacuum Filters &amp; Bags</b><small>HEPA filters · dust bags</small></div>
-              </Link>
-              <Link className="hero-product-card hero-product-dryer" href="/products/dryer-lint-filters">
-                <img src="/assets/store/dryer-lint.jpg" alt="Dryer replacement lint screen" />
-                <span className="hero-product-code">04 / LAUNDRY</span>
-                <div className="hero-product-label"><b>Dryer Lint Filters</b><small>Lint screens · lint traps</small></div>
-              </Link>
-            </div>
-            <div className="hero-catalog-footer"><span>Match by</span><b>Model / Reference / Dimensions</b><i>→</i></div>
           </div>
         </div>
         <div className="shell hero-disclaimer">*24H means eligible orders are dispatched within 24 hours after stock, specification, payment and cut-off confirmation—not delivered within 24 hours.</div>
