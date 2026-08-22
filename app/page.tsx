@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CategoryCard, ContactBand, PageShell, ProductShape } from "./components";
+import { CategoryCard, ContactBand, PageShell } from "./components";
 import { categories, services, whatsappLink } from "./site-data";
 
 export default function Home() {
@@ -8,28 +8,29 @@ export default function Home() {
       <section className="hero">
         <div className="shell hero-grid">
           <div className="hero-copy">
-            <span className="eyebrow">FACTORY-DIRECT REPLACEMENT FILTERS</span>
-            <h1>Source the right filter.<br /><em>Replenish without friction.</em></h1>
-            <p>Pool cartridges, dryer lint filters, vacuum filters and dust bags—organized for part matching, ready-stock supply, Amazon FBA preparation and custom packaging.</p>
+            <span className="eyebrow">FILTER REPLACEMENT MANUFACTURER</span>
+            <h1>One supply partner.<br /><em>Across water, air &amp; appliances.</em></h1>
+            <p>Pool &amp; spa cartridges, robotic pool cleaner filters, dryer lint screens, HEPA and appliance filters, vacuum dust bags and aquarium cartridges—organized around replacement references.</p>
             <div className="hero-actions">
               <Link className="btn" href="/products">Explore product categories <span>→</span></Link>
               <a className="text-link" href={whatsappLink("Hello JC Filters, I have a target part list and would like a sourcing check.")} target="_blank" rel="noopener noreferrer">Send your part list <span>↗</span></a>
             </div>
             <div className="proof-strip">
-              <div><b>24H*</b><span>Eligible ready-stock dispatch</span></div>
+              <div><b>6</b><span>Core product programs</span></div>
               <div><b>FBA</b><span>Unit, label and carton support</span></div>
-              <div><b>OEM</b><span>Custom pack configurations</span></div>
+              <div><b>24H*</b><span>Eligible stock dispatch</span></div>
             </div>
           </div>
 
-          <div className="hero-board" aria-label="Product catalog framework preview">
-            <div className="board-title"><span>CATALOG FRAMEWORK</span><b>Ready for product data</b></div>
-            <div className="board-grid">
-              <div className="shape-card featured-shape"><ProductShape type="cartridge" /><small>POOL CARTRIDGE</small></div>
-              <div className="shape-card"><ProductShape type="panel" /><small>VACUUM FILTER</small></div>
-              <div className="shape-card"><ProductShape type="screen" /><small>DRYER FILTER</small></div>
+          <div className="hero-board real-product-board" aria-label="JC product category preview">
+            <div className="board-title"><span>JC PRODUCT SYSTEM</span><b>6 connected programs</b></div>
+            <div className="real-product-grid">
+              <div className="real-product-card featured-product"><img src="/assets/store/pool-spa.jpg" alt="Pool and spa filter cartridges" /><small>POOL &amp; SPA</small></div>
+              <div className="real-product-card"><img src="/assets/store/dryer-lint.jpg" alt="Dryer lint screen filter" /><small>DRYER LINT</small></div>
+              <div className="real-product-card"><img src="/assets/store/hepa.jpg" alt="HEPA filter replacement" /><small>HEPA FILTER</small></div>
+              <div className="real-product-card"><img src="/assets/store/vacuum-dust-bag.jpg" alt="Vacuum dust bags" /><small>DUST BAGS</small></div>
             </div>
-            <div className="board-note"><span className="status-dot" />Approved products will replace these framework slots</div>
+            <div className="board-note"><span className="status-dot" />Representative categories from the current JC catalog</div>
           </div>
         </div>
         <div className="shell hero-disclaimer">*24H refers to dispatch after stock, payment, specification and cut-off confirmation—not delivery time.</div>
@@ -38,8 +39,8 @@ export default function Home() {
       <section className="category-section">
         <div className="shell">
           <div className="section-heading">
-            <div><span className="eyebrow">PRODUCT PROGRAMS</span><h2>Four categories. One clear sourcing route.</h2></div>
-            <p>Water filtration stays visually distinct from floor-care and appliance parts, while every category follows the same card-to-WhatsApp conversion path.</p>
+            <div><span className="eyebrow">YOUR PRODUCT PROGRAMS</span><h2>Six real categories, structured by application.</h2></div>
+            <p>The new architecture follows your Alibaba catalog: water filtration, dryer replacement parts, HEPA, appliance filters, non-woven dust bags and aquarium cartridges.</p>
           </div>
           <div className="category-grid">{categories.map((category) => <CategoryCard category={category} key={category.slug} />)}</div>
         </div>
@@ -69,7 +70,7 @@ export default function Home() {
             {services.map((service) => (
               <article className="service-card" key={service.slug}>
                 <span>{service.number}</span><h3>{service.title}</h3><p>{service.short}</p>
-                <Link href={`/services/${service.slug}`}>View service framework <b>→</b></Link>
+                <Link href={`/services/${service.slug}`}>View support details <b>→</b></Link>
               </article>
             ))}
           </div>

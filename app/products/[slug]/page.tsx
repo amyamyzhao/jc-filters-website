@@ -13,7 +13,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const category = categories.find((item) => item.slug === slug);
   if (!category) return {};
-  return { title: `${category.title} | JC Filters`, description: category.description };
+  const title = `${category.title} | JC Filters`;
+  const image = category.image ? `https://jc-filters-supply.glossy-pin-5885.chatgpt.site${category.image}` : null;
+  return {
+    title,
+    description: category.description,
+    openGraph: { title, description: category.description, images: image ? [{ url: image, alt: category.title }] : [] },
+    twitter: { card: "summary_large_image", title, description: category.description, images: image ? [image] : [] },
+  };
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -32,7 +39,18 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             <p>{category.description}</p>
             <div className="match-key"><span>MATCHING LOGIC</span><b>{category.matching}</b></div>
           </div>
-          <div className="category-hero-shape"><span>{category.code}</span><ProductShape type={category.shape} /><small>PRODUCT IMAGE AREA</small></div>
+          <div className="category-hero-shape">
+            <span>{category.code}</span>
+            {category.image ? <img className="category-hero-image" src={category.image} alt={category.title} /> : <ProductShape type={category.shape} />}
+            <small>REPRESENTATIVE CATEGORY IMAGE</small>
+          </div>
+        </div>
+      </section>
+
+      <section className="subcategory-section">
+        <div className="shell subcategory-row">
+          <b>CATALOG SUBCATEGORIES</b>
+          <div>{category.subcategories.map((item) => <span key={item}>{item}</span>)}</div>
         </div>
       </section>
 
@@ -43,7 +61,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       <section className="catalog-section">
         <div className="shell">
           <div className="section-heading product-heading">
-            <div><span className="eyebrow">PRODUCT CARD SYSTEM</span><h2>Catalog slots ready for your products.</h2></div>
+            <div><span className="eyebrow">PRODUCT CARD SYSTEM</span><h2>Cards ready for the approved SKU list.</h2></div>
             <p>Each approved product will replace one slot with its real image, part number, dimensions, pack information and an item-specific WhatsApp message.</p>
           </div>
           <div className="product-grid">{[1, 2, 3, 4, 5, 6].map((index) => <PlaceholderProductCard category={category} index={index} key={index} />)}</div>

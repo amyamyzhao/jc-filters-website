@@ -5,8 +5,8 @@ import { categories, contact, services, whatsappLink } from "./site-data";
 export function Brand() {
   return (
     <Link className="brand" href="/" aria-label="JC Filters home">
-      <span className="brand-mark">JC</span>
-      <span className="brand-copy"><strong>JC FILTERS</strong><small>REPLACEMENT FILTRATION</small></span>
+      <img className="brand-logo" src="/assets/store/jc-logo.jpg" alt="JC" />
+      <span className="brand-copy"><strong>JC FILTERS</strong><small>WATER · AIR · APPLIANCE</small></span>
     </Link>
   );
 }
@@ -29,6 +29,7 @@ export function Header() {
             <Link href="/services/fba-service">FBA Service</Link>
             <Link href="/services/custom-packaging">Custom Packaging</Link>
             <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
           </nav>
           <a className="btn btn-small" href={whatsappLink("Hello JC Filters, I would like to discuss replacement filter sourcing.")} target="_blank" rel="noopener noreferrer">Chat on WhatsApp <span>↗</span></a>
         </div>
@@ -43,7 +44,7 @@ export function Footer() {
       <div className="shell footer-grid">
         <div className="footer-brand">
           <Brand />
-          <p>A focused replacement-filter catalog framework for global sellers, importers and distributors.</p>
+          <p>Replacement filters for pool, dryer, air, appliance, vacuum and aquarium applications.</p>
         </div>
         <div>
           <h4>Products</h4>
@@ -61,7 +62,7 @@ export function Footer() {
         </div>
       </div>
       <div className="shell footer-bottom">
-        <span>© {new Date().getFullYear()} JC Filters. Framework content pending final product approval.</span>
+        <span>© {new Date().getFullYear()} JC Filters. Product-level content pending final SKU approval.</span>
         <span>*Dispatch timing is confirmed per order.</span>
       </div>
     </footer>
@@ -84,13 +85,15 @@ export function CategoryCard({ category }: { category: Category }) {
   return (
     <article className="category-card">
       <Link className="category-media" href={`/products/${category.slug}`} aria-label={`View ${category.title}`}>
-        <ProductShape type={category.shape} /><small>{category.code}</small>
+        {category.image ? <img src={category.image} alt={category.title} /> : <ProductShape type={category.shape} />}
+        <small>{category.code}</small>
       </Link>
       <div className="category-content">
         <span className="card-kicker">{category.kicker}</span>
         <h3><Link href={`/products/${category.slug}`}>{category.title}</Link></h3>
         <p>{category.description}</p>
-        <Link className="card-link" href={`/products/${category.slug}`}>View category framework <span>→</span></Link>
+        <div className="subcategory-preview">{category.subcategories.slice(0, 2).map((item) => <span key={item}>{item}</span>)}</div>
+        <Link className="card-link" href={`/products/${category.slug}`}>Explore this category <span>→</span></Link>
       </div>
     </article>
   );

@@ -7,19 +7,19 @@ export default function AboutPage() {
   return (
     <PageShell>
       <section className="page-hero about-hero">
-        <div className="shell narrow-hero"><span className="eyebrow">ABOUT THE PROGRAM</span><h1>Replacement filtration,<br /><em>organized for sellers.</em></h1><p>This page is intentionally a framework until approved company facts, factory material, certifications and team images are supplied.</p></div>
+        <div className="shell narrow-hero"><span className="eyebrow">ABOUT JC FILTERS</span><h1>Replacement filtration,<br /><em>organized for sellers.</em></h1><p>Tongxiang Jiacheng Environmental Protection Technology Co., Ltd. is presented on Alibaba.com as a Zhejiang-based manufacturer established in 2012.</p></div>
       </section>
       <section className="about-framework">
         <div className="shell about-grid">
-          <div><span className="eyebrow">POSITIONING</span><h2>A focused B2B catalog, not a retail storefront.</h2></div>
+          <div><span className="eyebrow">ALIBABA-LISTED PROFILE</span><h2>A focused replacement-filter manufacturer.</h2><p className="source-note">These facts are based on the current Alibaba.com company profile and should be rechecked before the public launch.</p></div>
           <div className="about-cards">
-            <article><span>01</span><h3>Part matching first</h3><p>Product structure begins with reference, dimensions and compatibility—not lifestyle merchandising.</p></article>
-            <article><span>02</span><h3>Seller support visible</h3><p>Ready stock, FBA preparation and packaging sit close to the product inquiry path.</p></article>
-            <article><span>03</span><h3>Claims stay verifiable</h3><p>Company scale, certifications and capability claims will only be added from approved source material.</p></article>
+            <article><span>01</span><h3>Established in 2012</h3><p>Business type listed as manufacturer; location listed as Zhejiang, China.</p></article>
+            <article><span>02</span><h3>51–100 people</h3><p>Alibaba profile lists a 1,000–3,000 m² facility and on-site verification.</p></article>
+            <article><span>03</span><h3>Multi-category filtration</h3><p>Pool cartridges, dryer lint filters, non-woven dust bags, air filters and pool-cleaner parts are listed as main products.</p></article>
           </div>
         </div>
       </section>
-      <ContactBand title="Company materials can be added next." text="Factory photos, verified business facts, certifications, process images and an approved company introduction will complete this page." />
+      <ContactBand title="Company materials can be added next." text="Approved factory photos, certifications, process images and a final English company introduction will complete this page." />
     </PageShell>
   );
 }

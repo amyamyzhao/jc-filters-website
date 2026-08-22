@@ -4,7 +4,7 @@ import { categories } from "../site-data";
 
 export const metadata: Metadata = {
   title: "Product Programs | JC Filters",
-  description: "Browse the JC Filters framework for pool cartridges, dryer lint filters, vacuum filters and vacuum dust bags.",
+  description: "Browse JC pool and spa filters, dryer lint screens, HEPA filters, appliance replacements, vacuum dust bags and aquarium cartridges.",
 };
 
 export default function ProductsPage() {
@@ -14,12 +14,12 @@ export default function ProductsPage() {
         <div className="shell narrow-hero">
           <span className="eyebrow">PRODUCT CATALOG</span>
           <h1>Find the category first.<br /><em>Match the part next.</em></h1>
-          <p>The catalog is structured around the way replacement parts are sourced: by reference, compatible model, dimensions and visual confirmation.</p>
+          <p>Six product programs follow the structure of the current JC catalog, then narrow each inquiry by reference, compatible model, dimensions and visual confirmation.</p>
         </div>
       </section>
       <section className="category-section inner-category-section">
         <div className="shell">
-          <div className="catalog-intro"><b>04 PRODUCT PROGRAMS</b><span>Approved product photos, part numbers and compatibility data will be loaded into these category pages.</span></div>
+          <div className="catalog-intro"><b>06 PRODUCT PROGRAMS</b><span>Product photos, part numbers and compatibility data will be loaded after the final SKU list is approved.</span></div>
           <div className="category-grid">{categories.map((category) => <CategoryCard category={category} key={category.slug} />)}</div>
         </div>
       </section>
