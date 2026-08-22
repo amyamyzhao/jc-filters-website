@@ -14,18 +14,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://jc-filters-supply.glossy-pin-5885.chatgpt.site'),
-  title: 'JC Filters | Replacement filters for global sellers',
-  description: 'Pool and spa filters, dryer lint screens, HEPA and appliance filters, vacuum dust bags and aquarium cartridges with seller support.',
+  title: 'JC Filters | Replacement filter supply for online sellers',
+  description: 'Pool and spa filters, appliance filters, vacuum filters and dust bags, and dryer lint filters with ready stock, FBA support and custom packing.',
   openGraph: {
     title: 'JC Filters | Replacement filtration, ready for replenishment',
-    description: 'Replacement filters across water, air and appliances with ready-stock dispatch support, FBA service and custom packaging.',
+    description: 'Replacement filters across pool, appliance, vacuum and dryer categories with ready-stock dispatch, FBA support and custom packing.',
     type: 'website',
     images: [{ url: '/jc-filters-social-card.png', width: 1200, height: 630, alt: 'JC Filters replacement filtration catalog' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'JC Filters | Replacement filtration, ready for replenishment',
-    description: 'Pool, dryer, HEPA, appliance, vacuum and aquarium filter programs for global sellers.',
+    description: 'Pool, appliance, vacuum and dryer replacement filter programs for online sellers.',
     images: ['/jc-filters-social-card.png'],
   },
 };

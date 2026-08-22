@@ -42,7 +42,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           <div className="category-hero-shape">
             <span>{category.code}</span>
             {category.image ? <img className="category-hero-image" src={category.image} alt={category.title} /> : <ProductShape type={category.shape} />}
-            <small>REPRESENTATIVE CATEGORY IMAGE</small>
+            <small>JC CATEGORY COLLECTION</small>
           </div>
         </div>
       </section>
@@ -61,16 +61,16 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       <section className="catalog-section">
         <div className="shell">
           <div className="section-heading product-heading">
-            <div><span className="eyebrow">PRODUCT CARD SYSTEM</span><h2>Cards ready for the approved SKU list.</h2></div>
-            <p>Each approved product will replace one slot with its real image, part number, dimensions, pack information and an item-specific WhatsApp message.</p>
+            <div><span className="eyebrow">EXPANDABLE CATALOG</span><h2>Product cards added as your catalog grows.</h2></div>
+            <p>Each product card can carry its own image, compatible models, replacement number, dimensions, pack information and a pre-filled direct inquiry.</p>
           </div>
-          <div className="product-grid">{[1, 2, 3, 4, 5, 6].map((index) => <PlaceholderProductCard category={category} index={index} key={index} />)}</div>
+          <div className="product-grid range-grid">{[1, 2].map((index) => <PlaceholderProductCard category={category} index={index} key={index} />)}</div>
         </div>
       </section>
 
       <section className="data-check-section">
         <div className="shell data-check-grid">
-          <div><span className="eyebrow">BEFORE A CARD GOES LIVE</span><h2>What each product needs.</h2></div>
+          <div><span className="eyebrow">WHEN YOU ADD A PRODUCT</span><h2>Five fields complete the card.</h2></div>
           <ul>
             <li><span>01</span>Clean product images</li>
             <li><span>02</span>Internal SKU and sellable name</li>

@@ -7,7 +7,7 @@ export default function AboutPage() {
   return (
     <PageShell>
       <section className="page-hero about-hero">
-        <div className="shell narrow-hero"><span className="eyebrow">ABOUT JC FILTERS</span><h1>Replacement filtration,<br /><em>organized for sellers.</em></h1><p>Tongxiang Jiacheng Environmental Protection Technology Co., Ltd. is presented on Alibaba.com as a Zhejiang-based manufacturer established in 2012.</p></div>
+        <div className="shell narrow-hero"><span className="eyebrow">ABOUT THE MANUFACTURER</span><h1>Replacement filtration,<br /><em>organized for sellers.</em></h1><p>Tongxiang Jiacheng Environmental Protection Technology Co., Ltd. is presented on Alibaba.com as a Zhejiang-based manufacturer established in 2012.</p></div>
       </section>
       <section className="about-framework">
         <div className="shell about-grid">

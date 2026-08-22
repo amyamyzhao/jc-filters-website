@@ -4,7 +4,7 @@ import { categories } from "../site-data";
 
 export const metadata: Metadata = {
   title: "Product Programs | JC Filters",
-  description: "Browse JC pool and spa filters, dryer lint screens, HEPA filters, appliance replacements, vacuum dust bags and aquarium cartridges.",
+  description: "Browse JC pool and spa filters, appliance filters, vacuum filters and dust bags, and dryer lint filters.",
 };
 
 export default function ProductsPage() {
@@ -12,14 +12,14 @@ export default function ProductsPage() {
     <PageShell whatsappMessage="Hello JC Filters, please share your current replacement-filter product list.">
       <section className="page-hero">
         <div className="shell narrow-hero">
-          <span className="eyebrow">PRODUCT CATALOG</span>
-          <h1>Find the category first.<br /><em>Match the part next.</em></h1>
-          <p>Six product programs follow the structure of the current JC catalog, then narrow each inquiry by reference, compatible model, dimensions and visual confirmation.</p>
+          <span className="eyebrow">FILTER CATEGORIES</span>
+          <h1>Start with the application.<br /><em>Match the exact part next.</em></h1>
+          <p>Four focused product programs organize every inquiry by replacement reference, compatible model, dimensions and visual confirmation.</p>
         </div>
       </section>
       <section className="category-section inner-category-section">
         <div className="shell">
-          <div className="catalog-intro"><b>06 PRODUCT PROGRAMS</b><span>Product photos, part numbers and compatibility data will be loaded after the final SKU list is approved.</span></div>
+          <div className="catalog-intro"><b>04 PRODUCT PROGRAMS</b><span>New product cards can be added continuously as images and compatibility data are confirmed.</span></div>
           <div className="category-grid">{categories.map((category) => <CategoryCard category={category} key={category.slug} />)}</div>
         </div>
       </section>
