@@ -23,8 +23,33 @@ export default function Home() {
           </div>
 
           <div className="jc-hero-visual" aria-label="JC replacement filter collections">
-            <img src="/assets/jc/pool-collection.jpg" alt="Pool and spa replacement filter collection" />
-            <div className="hero-image-caption"><span>01</span><div><b>Pool &amp; Spa Filters</b><small>Pool Filters / Spa Filters</small></div></div>
+            <div className="hero-catalog-header">
+              <span>READY-STOCK PRODUCT PROGRAMS</span>
+              <b>04 focused categories</b>
+            </div>
+            <div className="hero-product-board">
+              <Link className="hero-product-card hero-product-pool" href="/products/pool-and-spa-filters">
+                <img src="/assets/jc/pool-collection.jpg" alt="Pool and spa replacement filter collection" />
+                <span className="hero-product-code">01 / WATER</span>
+                <div className="hero-product-label"><b>Pool &amp; Spa Filters</b><small>Pool cartridges · spa filters</small></div>
+              </Link>
+              <Link className="hero-product-card hero-product-appliance" href="/products/appliance-filters">
+                <img src="/assets/jc/appliance-collection.jpg" alt="Air purifier and humidifier replacement filter collection" />
+                <span className="hero-product-code">02 / AIR</span>
+                <div className="hero-product-label"><b>Appliance Filters</b><small>Air purifier · humidifier</small></div>
+              </Link>
+              <Link className="hero-product-card hero-product-vacuum" href="/products/vacuum-filters-and-dust-bags">
+                <img src="/assets/jc/vacuum-filter-collection.jpg" alt="Vacuum replacement HEPA filters and filter sets" />
+                <span className="hero-product-code">03 / FLOOR CARE</span>
+                <div className="hero-product-label"><b>Vacuum Filters &amp; Bags</b><small>HEPA filters · dust bags</small></div>
+              </Link>
+              <Link className="hero-product-card hero-product-dryer" href="/products/dryer-lint-filters">
+                <img src="/assets/store/dryer-lint.jpg" alt="Dryer replacement lint screen" />
+                <span className="hero-product-code">04 / LAUNDRY</span>
+                <div className="hero-product-label"><b>Dryer Lint Filters</b><small>Lint screens · lint traps</small></div>
+              </Link>
+            </div>
+            <div className="hero-catalog-footer"><span>Match by</span><b>Model / Reference / Dimensions</b><i>→</i></div>
           </div>
         </div>
         <div className="shell hero-disclaimer">*24H means eligible orders are dispatched within 24 hours after stock, specification, payment and cut-off confirmation—not delivered within 24 hours.</div>
