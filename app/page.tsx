@@ -9,10 +9,10 @@ export default function Home() {
         <div className="shell jc-hero-grid">
           <div className="jc-hero-copy">
             <span className="eyebrow">YOUR TRUSTED FILTER MANUFACTURER</span>
-            <h1>Ready-stock replacement filters for <em>Amazon sellers.</em></h1>
-            <p>Restock pool, appliance, vacuum and dryer filter SKUs with 24-hour dispatch on eligible stock orders, FBA preparation and custom packaging support.</p>
+            <h1>Ready-stock replacement filters for <em>online sellers.</em></h1>
+            <p>Restock pool, appliance, vacuum and dryer filter SKUs with 24-hour dispatch on eligible stock orders, marketplace fulfillment preparation and custom packaging support.</p>
             <div className="hero-actions">
-              <a className="btn" href={whatsappLink("Hello, I sell on Amazon and would like to check ready stock for replacement filters.")} target="_blank" rel="noopener noreferrer">Check ready stock <span>↗</span></a>
+              <a className="btn" href={whatsappLink("Hello, I sell replacement filters online and would like to check your ready stock.")} target="_blank" rel="noopener noreferrer">Check ready stock <span>↗</span></a>
               <Link className="text-link" href="#product-categories">Browse filter programs <span>→</span></Link>
             </div>
             <div className="jc-capability-row" aria-label="Supply capabilities">

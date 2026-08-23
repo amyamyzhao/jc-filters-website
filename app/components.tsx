@@ -17,7 +17,7 @@ export function Header() {
     <>
       <div className="service-bar">
         <div className="shell service-bar-inner">
-          <span>For Amazon sellers, importers and filter distributors</span>
+          <span>For online sellers, importers and filter distributors</span>
           <span><b>24H ready-stock dispatch*</b><i />FBA support<i />Custom packing</span>
         </div>
       </div>
