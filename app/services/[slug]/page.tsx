@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const service = services.find((item) => item.slug === slug);
   if (!service) return {};
-  return { title: `${service.title} | JC Filters`, description: service.short };
+  return { title: `${service.title} | JC Filters`, description: service.short, alternates: { canonical: `/services/${service.slug}` } };
 }
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {

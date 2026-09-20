@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ContactBand, PageShell, PlaceholderProductCard, ProductShape } from "../../components";
+import { CatalogProductCard, ContactBand, PageShell, ProductShape } from "../../components";
 import { PartMatchForm } from "../../part-match-form";
-import { categories } from "../../site-data";
+import { productsForCategory } from "../../product-data";
+import { categories, siteUrl, slugifySubcategory } from "../../site-data";
 
 export function generateStaticParams() {
   return categories.map((category) => ({ slug: category.slug }));
@@ -14,10 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const category = categories.find((item) => item.slug === slug);
   if (!category) return {};
   const title = `${category.title} | JC Filters`;
-  const image = category.image ? `https://jc-filters-supply.glossy-pin-5885.chatgpt.site${category.image}` : null;
+  const image = category.image ? `${siteUrl}${category.image}` : null;
   return {
     title,
     description: category.description,
+    alternates: { canonical: `/products/${category.slug}` },
     openGraph: { title, description: category.description, images: image ? [{ url: image, alt: category.title }] : [] },
     twitter: { card: "summary_large_image", title, description: category.description, images: image ? [image] : [] },
   };
@@ -27,6 +29,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const category = categories.find((item) => item.slug === slug);
   if (!category) notFound();
+  const categoryProducts = productsForCategory(category.slug);
 
   return (
     <PageShell whatsappMessage={`Hello JC Filters, I would like to ask about ${category.title}.`}>
@@ -48,9 +51,39 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       </section>
 
       <section className="subcategory-section">
-        <div className="shell subcategory-row">
-          <b>CATALOG SUBCATEGORIES</b>
-          <div>{category.subcategories.map((item) => <span key={item}>{item}</span>)}</div>
+        <div className="shell">
+          <div className="subcategory-row">
+            <b>CATALOG SUBCATEGORIES</b>
+            <div>{category.slug === "dryer-lint-filters"
+              ? <span>Browse future products by part number</span>
+              : category.subcategories.map((item) => <Link key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{item}<small>→</small></Link>)}</div>
+          </div>
+          {category.subImages && <div className="subcategory-image-grid">
+            {category.subcategories.map((item, index) => {
+              const visual = <><img src={category.subImages?.[index] || category.image} alt={`${item} product family`} /><span><small>0{index + 1}</small><b>{item}</b><em>View category →</em></span></>;
+              return category.slug === "dryer-lint-filters"
+                ? <article key={item}>{visual}</article>
+                : <Link key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{visual}</Link>;
+            })}
+          </div>}
+        </div>
+      </section>
+
+      <section className="brand-directory-section" id="compatible-brands">
+        <div className="shell brand-directory-layout">
+          <div className="brand-directory-copy">
+            <span className="eyebrow">COMPATIBLE BRAND INDEX</span>
+            <h2>Find the right family before the exact part.</h2>
+            <p>{category.brandNote || "The brand directory reflects compatible reference families found in the current catalog materials. Exact fit is confirmed by model, part number, dimensions and product photos."}</p>
+            <Link className="text-link" href="/contact">Send a matching request <span>→</span></Link>
+          </div>
+          <div className="brand-index-panel">
+            <span className="panel-label">{category.compatibleBrands.length ? `${category.compatibleBrands.length} BRAND FAMILIES IN CURRENT MATERIALS` : "REFERENCE-BASED MATCHING"}</span>
+            <div className={`brand-chip-grid ${category.compatibleBrands.length ? "" : "reference-chip-grid"}`}>
+              {(category.compatibleBrands.length ? category.compatibleBrands : category.referenceExamples).map((item) => <span key={item}>{item}</span>)}
+            </div>
+            <small>Brand names identify compatibility only. They do not imply affiliation or endorsement.</small>
+          </div>
         </div>
       </section>
 
@@ -61,22 +94,26 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       <section className="catalog-section">
         <div className="shell">
           <div className="section-heading product-heading">
-            <div><span className="eyebrow">EXPANDABLE CATALOG</span><h2>Product cards added as your catalog grows.</h2></div>
-            <p>Each product card can carry its own image, compatible models, replacement number, dimensions, pack information and a pre-filled direct inquiry.</p>
+            <div><span className="eyebrow">PRODUCT CATALOG</span><h2>A clean structure, ready for product records.</h2></div>
+            <p>Products will appear here after their images, replacement references and complete compatibility lists are matched. New models can then be added continuously within this category.</p>
           </div>
-          <div className="product-grid range-grid">{[1, 2].map((index) => <PlaceholderProductCard category={category} index={index} key={index} />)}</div>
+          {categoryProducts.length ? (
+            <div className="product-grid range-grid">{categoryProducts.map((product) => <CatalogProductCard key={product.slug} product={product} />)}</div>
+          ) : (
+            <div className="catalog-ready-panel">
+              <div className="catalog-ready-copy"><span>CATALOG STATUS</span><h3>Product pages are being prepared.</h3><p>In the meantime, send a brand, model number, part reference or clear photo for a direct match.</p></div>
+              <div className="catalog-lanes">{category.subcategories.map((item, index) => <div key={item}><span>0{index + 1}</span><b>{item}</b><small>Images · references · compatibility · pack options</small></div>)}</div>
+            </div>
+          )}
         </div>
       </section>
 
       <section className="data-check-section">
         <div className="shell data-check-grid">
-          <div><span className="eyebrow">WHEN YOU ADD A PRODUCT</span><h2>Five fields complete the card.</h2></div>
+          <div><span className="eyebrow">FIT CONFIRMATION</span><h2>What we check before quotation.</h2></div>
           <ul>
-            <li><span>01</span>Clean product images</li>
-            <li><span>02</span>Internal SKU and sellable name</li>
-            <li><span>03</span>Cross-reference / compatibility list</li>
-            <li><span>04</span>Dimensions and pack configuration</li>
-            <li><span>05</span>Ready-stock and customization status</li>
+            {category.fitChecks.map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}
+            <li><span>05</span>Quantity, stock timing and pack requirements</li>
           </ul>
         </div>
       </section>

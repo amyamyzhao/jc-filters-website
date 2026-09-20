@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageShell } from "../components";
 import { contact, whatsappLink } from "../site-data";
 
-export const metadata: Metadata = { title: "Contact JC Filters" };
+export const metadata: Metadata = { title: "Contact JC Filters", alternates: { canonical: "/contact" } };
 
 export default function ContactPage() {
   return (

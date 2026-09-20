@@ -1,6 +1,8 @@
 import Link from "next/link";
+import type { ProductRecord } from "./product-data";
 import type { Category } from "./site-data";
-import { categories, contact, services, whatsappLink } from "./site-data";
+import { InquiryForm } from "./inquiry-form";
+import { categories, contact, menuSubcategories, services, slugifySubcategory, whatsappLink } from "./site-data";
 
 export function Brand() {
   return (
@@ -17,31 +19,66 @@ export function Header() {
     <>
       <div className="service-bar">
         <div className="shell service-bar-inner">
-          <span>For online sellers, importers and filter distributors</span>
-          <span><b>24H ready-stock dispatch*</b><i />FBA support<i />Custom packing</span>
+          <span>For ecommerce sellers, importers and filter distributors</span>
+          <span><b>24H ready-stock dispatch*</b><i />FBA services<i />OEM &amp; ODM</span>
         </div>
       </div>
       <header className="site-header">
         <div className="shell nav-row">
           <Brand />
           <nav aria-label="Primary navigation">
-            <Link href="/products">Filter Categories</Link>
+            <div className="nav-products">
+              <Link className="nav-products-trigger" href="/products">Products <span aria-hidden="true">⌄</span></Link>
+              <div className="product-mega-menu">
+                <div className="mega-menu-head">
+                  <div><span>PRODUCT CATEGORIES</span><b>Four focused filter programs</b></div>
+                  <Link href="/products">View all categories <span>→</span></Link>
+                </div>
+                <div className="mega-menu-grid">
+                  {categories.map((category) => (
+                    <div className="mega-category" key={category.slug}>
+                      <Link className="mega-category-title" href={`/products/${category.slug}`}><small>{category.code}</small>{category.title}</Link>
+                      {menuSubcategories(category).map((item) => (
+                        <Link className="mega-subcategory" key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{item}<span>→</span></Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <Link href="/services/fba-service">FBA Services</Link>
             <Link href="/services/ready-stock">Ready Stock</Link>
-            <Link href="/services/fba-service">FBA Service</Link>
-            <Link href="/services/custom-packaging">Custom Packaging</Link>
+            <Link href="/services/custom-packaging">OEM &amp; ODM</Link>
             <Link href="/about">About</Link>
           </nav>
-          <a className="whatsapp-icon-button header-whatsapp" href={whatsappLink("Hello, I would like to discuss replacement filter sourcing.")} target="_blank" rel="noopener noreferrer" aria-label="Start a WhatsApp inquiry"><WhatsAppIcon /></a>
           <details className="mobile-menu">
             <summary aria-label="Open navigation">Menu</summary>
-            <div>
-              <Link href="/products">Filter Categories</Link>
+            <div className="mobile-menu-panel">
+              <details className="mobile-products-tree" open>
+                <summary>Products</summary>
+                <div>
+                  <Link className="mobile-all-products" href="/products">All filter categories <span>→</span></Link>
+                  <div className="mobile-category-tree">{categories.map((category) => menuSubcategories(category).length ? (
+                    <details className="mobile-category-group" key={category.slug}>
+                      <summary><span>{category.code}</span>{category.title}</summary>
+                      <div>
+                        <Link href={`/products/${category.slug}`}>All {category.title}</Link>
+                        {menuSubcategories(category).map((item) => <Link key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{item}</Link>)}
+                      </div>
+                    </details>
+                  ) : (
+                    <Link className="mobile-single-category" key={category.slug} href={`/products/${category.slug}`}><small>{category.code}</small><span>{category.title}</span><b>→</b></Link>
+                  ))}</div>
+                </div>
+              </details>
+              <div className="mobile-service-links">
+              <Link href="/services/fba-service">FBA Services</Link>
               <Link href="/services/ready-stock">Ready Stock</Link>
-              <Link href="/services/fba-service">FBA Service</Link>
-              <Link href="/services/custom-packaging">Custom Packaging</Link>
+              <Link href="/services/custom-packaging">OEM &amp; ODM</Link>
               <Link href="/about">About JC</Link>
               <Link href="/contact">Contact</Link>
               <a className="mobile-wa" href={whatsappLink("Hello, I would like to discuss replacement filter sourcing.")} target="_blank" rel="noopener noreferrer" aria-label="Start a WhatsApp inquiry"><WhatsAppIcon /></a>
+              </div>
             </div>
           </details>
         </div>
@@ -56,7 +93,7 @@ export function Footer() {
       <div className="shell footer-grid">
         <div className="footer-brand">
           <Brand />
-          <p>Replacement filters for pool and spa, air and humidifier appliances, vacuum cleaners and dryers.</p>
+          <p>Filter programs for pool and spa, air and humidifier appliances, vacuum cleaners and dryers.</p>
         </div>
         <div>
           <h4>Products</h4>
@@ -111,38 +148,36 @@ export function CategoryCard({ category }: { category: Category }) {
   );
 }
 
-export function PlaceholderProductCard({ category, index }: { category: Category; index: number }) {
-  const slot = String(index).padStart(2, "0");
-  const rangeName = category.subcategories[(index - 1) % category.subcategories.length];
-  const image = category.subImages?.[(index - 1) % category.subcategories.length] || category.image;
+export function CatalogProductCard({ product }: { product: ProductRecord }) {
   return (
     <article className="product-card">
-      <div className="product-media">
-        <span className="slot-label">CATALOG RANGE {slot}</span>
-        {image ? <img src={image} alt={rangeName} /> : <ProductShape type={category.shape} />}
-        <span className="pending-chip">PRODUCTS ADD CONTINUOUSLY</span>
-      </div>
+      <Link className="product-media" href={`/products/${product.categorySlug}/${product.slug}`}>
+        <span className="slot-label">{product.readyStock ? "READY STOCK" : "CHECK AVAILABILITY"}</span>
+        <img src={product.primaryImage} alt={product.name} />
+      </Link>
       <div className="product-info">
-        <span className="card-kicker">{category.kicker}</span>
-        <h3>{rangeName}</h3>
+        <span className="card-kicker">SKU / {product.sku}</span>
+        <h3><Link href={`/products/${product.categorySlug}/${product.slug}`}>{product.name}</Link></h3>
         <dl>
-          <div><dt>Match by</dt><dd>Model / part no.</dd></div>
-          <div><dt>Available support</dt><dd>FBA / custom pack</dd></div>
-          <div><dt>Catalog status</dt><dd>Updating</dd></div>
+          <div><dt>Compatible brands</dt><dd>{product.compatibleBrands.slice(0, 3).join(" · ")}</dd></div>
+          <div><dt>Replacement no.</dt><dd>{product.replacementNumbers.slice(0, 2).join(" · ")}</dd></div>
+          <div><dt>Supply support</dt><dd>FBA · custom pack</dd></div>
         </dl>
-        <a className="card-inquiry" href={whatsappLink(`Hello JC Filters, I am asking about ${rangeName}. Please help me match my model or part number.`)} target="_blank" rel="noopener noreferrer">Ask about this range <span>↗</span></a>
+        <a className="card-inquiry" href={whatsappLink(`Hello JC Filters, I am asking about ${product.name}, SKU ${product.sku}.`)} target="_blank" rel="noopener noreferrer">Ask about this product <span>↗</span></a>
       </div>
     </article>
   );
 }
 
 export function ContactBand({ title = "Have a part list ready?", text = "Send the current reference, dimensions, quantity and destination. We’ll use them to structure the next sourcing conversation." }: { title?: string; text?: string }) {
+  const web3FormsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
+
   return (
     <section className="contact-band">
       <div className="shell contact-band-grid">
         <div><span className="eyebrow light">DIRECT INQUIRY</span><h2>{title}</h2><p>{text}</p></div>
         <div className="contact-actions">
-          <a className="btn btn-white" href={whatsappLink("Hello, I have a part list for matching. I will send the references, quantity and destination.")} target="_blank" rel="noopener noreferrer">Send your product request <WhatsAppIcon /></a>
+          <InquiryForm accessKey={web3FormsAccessKey} />
           <a className="email-link" href={`mailto:${contact.email}`}>{contact.email}</a>
         </div>
       </div>
