@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { contact } from "./site-data";
+import { contact, whatsappLink } from "./site-data";
 
 type SubmissionState = "idle" | "sending" | "success" | "error";
+type SubmittedRequest = { name: string; email: string; request: string };
 
 export function InquiryForm({ accessKey }: { accessKey: string }) {
   const [state, setState] = useState<SubmissionState>("idle");
   const [message, setMessage] = useState("");
+  const [submittedRequest, setSubmittedRequest] = useState<SubmittedRequest | null>(null);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -36,9 +38,14 @@ export function InquiryForm({ accessKey }: { accessKey: string }) {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const customerName = String(formData.get("name") ?? "").trim();
+    const customerEmail = String(formData.get("email") ?? "").trim();
+    const customerRequest = String(formData.get("message") ?? "").trim();
     formData.set("access_key", accessKey);
     formData.set("subject", "New B2B filter inquiry from JC Filters website");
     formData.set("from_name", "JC Filters Website");
+    formData.set("replyto", customerEmail);
+    formData.set("Customer Reply Email", customerEmail);
     formData.set("Page URL", window.location.href);
 
     setState("sending");
@@ -55,6 +62,7 @@ export function InquiryForm({ accessKey }: { accessKey: string }) {
         throw new Error(result.message || "Submission failed");
       }
 
+      setSubmittedRequest({ name: customerName, email: customerEmail, request: customerRequest });
       form.reset();
       setState("success");
       setMessage("Thank you. Your request has been sent to JC Filters.");
@@ -62,6 +70,43 @@ export function InquiryForm({ accessKey }: { accessKey: string }) {
       setState("error");
       setMessage("The email form could not send. Please try again or contact us on WhatsApp.");
     }
+  }
+
+  if (state === "success" && accessKey) {
+    const whatsappMessage = [
+      "Hello JC Filters, I have just submitted this inquiry through your website:",
+      `Name: ${submittedRequest?.name ?? ""}`,
+      `Email: ${submittedRequest?.email ?? ""}`,
+      `Product request: ${submittedRequest?.request ?? ""}`,
+      "",
+      "I would like to continue the conversation on WhatsApp.",
+    ].join("\n");
+
+    return (
+      <div className="inquiry-success" role="status" aria-live="polite">
+        <span className="inquiry-success-icon" aria-hidden="true">✓</span>
+        <span className="inquiry-success-kicker">Request received</span>
+        <h3>Thank you. Your request is on its way.</h3>
+        <p>JC Filters will review your product, quantity, destination and packaging requirements and reply as soon as possible.</p>
+        <div className="inquiry-success-next">
+          <h4>Want a faster conversation?</h4>
+          <p>Your inquiry details are ready in a WhatsApp message. You can edit them before sending.</p>
+        </div>
+        <a
+          className="inquiry-whatsapp-cta"
+          href={whatsappLink(whatsappMessage)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className="inquiry-whatsapp-icon" aria-hidden="true" />
+          Message JC Filters on WhatsApp
+          <span aria-hidden="true">↗</span>
+        </a>
+        <button className="inquiry-reset" type="button" onClick={() => { setState("idle"); setMessage(""); setSubmittedRequest(null); }}>
+          Send another inquiry
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -73,7 +118,7 @@ export function InquiryForm({ accessKey }: { accessKey: string }) {
           <input name="name" type="text" autoComplete="name" placeholder="Your name" required />
         </label>
         <label>
-          <span>Work email <b className="required-mark" aria-hidden="true">*</b></span>
+          <span>Work email <b className="required-mark" aria-label="required">*</b></span>
           <input name="email" type="email" autoComplete="email" placeholder="name@company.com" required aria-required="true" />
         </label>
       </div>
