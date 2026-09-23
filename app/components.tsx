@@ -35,14 +35,23 @@ export function Header() {
                   <Link href="/products">View all categories <span>→</span></Link>
                 </div>
                 <div className="mega-menu-grid">
-                  {categories.map((category) => (
-                    <div className="mega-category" key={category.slug}>
-                      <Link className="mega-category-title" href={`/products/${category.slug}`}><small>{category.code}</small>{category.title}</Link>
-                      {menuSubcategories(category).map((item) => (
-                        <Link className="mega-subcategory" key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{item}<span>→</span></Link>
-                      ))}
-                    </div>
-                  ))}
+                  {categories.map((category) => {
+                    const subcategories = menuSubcategories(category);
+
+                    return subcategories.length ? (
+                      <div className="mega-category" key={category.slug}>
+                        <Link className="mega-category-title" href={`/products/${category.slug}`}><small>{category.code}</small>{category.title}</Link>
+                        {subcategories.map((item) => (
+                          <Link className="mega-subcategory" key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{item}<span>→</span></Link>
+                        ))}
+                      </div>
+                    ) : (
+                      <a className="mega-category mega-category-direct" key={category.slug} href={`/products/${category.slug}`} aria-label={`View ${category.title}`}>
+                        <span className="mega-category-title"><small>{category.code}</small>{category.title}</span>
+                        <span className="mega-category-link">View category <span>→</span></span>
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </div>
