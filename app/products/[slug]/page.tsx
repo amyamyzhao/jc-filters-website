@@ -105,12 +105,10 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
               ? <span>{categoryProducts.length} verified products · browse by part number below</span>
               : category.subcategories.map((item) => <Link key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{item}<small>→</small></Link>)}</div>
           </div>
-          {category.subImages && <div className="subcategory-image-grid">
+          {category.subImages && !isDryerCategory && <div className="subcategory-image-grid">
             {category.subcategories.map((item, index) => {
-              const visual = <><img src={category.subImages?.[index] || category.image} alt={`${item} product family`} /><span><small>0{index + 1}</small><b>{item}</b><em>{isDryerCategory ? "Browse verified products below" : "View category →"}</em></span></>;
-              return isDryerCategory
-                ? <article key={item}>{visual}</article>
-                : <Link key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{visual}</Link>;
+              const visual = <><img src={category.subImages?.[index] || category.image} alt={`${item} product family`} /><span><small>0{index + 1}</small><b>{item}</b><em>View category →</em></span></>;
+              return <Link key={item} href={`/products/${category.slug}/${slugifySubcategory(item)}`}>{visual}</Link>;
             })}
           </div>}
         </div>
