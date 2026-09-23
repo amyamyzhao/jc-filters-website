@@ -238,8 +238,11 @@ export default async function ProductOrSubcategoryPage({ params }: { params: Pro
   }
 
   if (!product || !category) notFound();
-  const subcategoryTitle = category.subcategories.find((item) => slugifySubcategory(item) === product.subcategorySlug) || "Vacuum Dust Bags";
+  const subcategoryTitle = category.subcategories.find((item) => slugifySubcategory(item) === product.subcategorySlug) || category.title;
   const subcategoryPath = `/products/${category.slug}/${product.subcategorySlug}`;
+  const hasSubcategoryRoute = category.slug !== "dryer-lint-filters";
+  const catalogPath = hasSubcategoryRoute ? subcategoryPath : `/products/${category.slug}`;
+  const isDryerProduct = category.slug === "dryer-lint-filters";
   const relatedProducts = productsForSubcategory(category.slug, product.subcategorySlug || "")
     .filter((item) => item.slug !== product.slug)
     .slice(0, 3);
@@ -265,8 +268,8 @@ export default async function ProductOrSubcategoryPage({ params }: { params: Pro
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Products", item: `${siteUrl}/products` },
       { "@type": "ListItem", position: 2, name: category.title, item: `${siteUrl}/products/${category.slug}` },
-      { "@type": "ListItem", position: 3, name: subcategoryTitle, item: `${siteUrl}${subcategoryPath}` },
-      { "@type": "ListItem", position: 4, name: product.name, item: `${siteUrl}${canonicalPath}` },
+      ...(hasSubcategoryRoute ? [{ "@type": "ListItem", position: 3, name: subcategoryTitle, item: `${siteUrl}${subcategoryPath}` }] : []),
+      { "@type": "ListItem", position: hasSubcategoryRoute ? 4 : 3, name: product.name, item: `${siteUrl}${canonicalPath}` },
     ],
   };
 
@@ -275,7 +278,7 @@ export default async function ProductOrSubcategoryPage({ params }: { params: Pro
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <section className="product-detail-hero">
-        <div className="shell breadcrumb"><Link href="/products">Products</Link><span>→</span><Link href={`/products/${category.slug}`}>{category.title}</Link><span>→</span><Link href={subcategoryPath}>{subcategoryTitle}</Link><span>→</span><b>{product.reference}</b></div>
+        <div className="shell breadcrumb"><Link href="/products">Products</Link><span>→</span><Link href={`/products/${category.slug}`}>{category.title}</Link><span>→</span>{hasSubcategoryRoute && <><Link href={subcategoryPath}>{subcategoryTitle}</Link><span>→</span></>}<b>{product.reference}</b></div>
         <div className="shell product-detail-grid">
           <div>
             <div className="product-detail-image">
@@ -289,7 +292,11 @@ export default async function ProductOrSubcategoryPage({ params }: { params: Pro
                 </span>
               )}
             </div>
-            <p className="product-image-note">{product.primaryImage ? "Style-matched product photo from the supplied JC dust-bag catalog. Final collar and dimensions are reconfirmed for quotation." : "No verified matching photo was found in the supplied dust-bag folder, so no substitute style is displayed."}</p>
+            <p className="product-image-note">{product.primaryImage
+              ? isDryerProduct
+                ? "Verified product photo from the supplied JC dryer-filter catalog. The complete model, guide profile and physical fit are reconfirmed for quotation."
+                : "Style-matched product photo from the supplied JC dust-bag catalog. Final collar and dimensions are reconfirmed for quotation."
+              : "No verified matching photo was found for this reference, so no substitute style is displayed."}</p>
           </div>
           <div className="product-detail-copy">
             <span className="eyebrow">REPLACEMENT REFERENCE / {product.reference}</span>
@@ -299,7 +306,7 @@ export default async function ProductOrSubcategoryPage({ params }: { params: Pro
               <div><dt>Stock status</dt><dd>{product.readyStock ? "Ready stock — confirm quantity" : "Confirm current availability"}</dd></div>
               <div><dt>Compatible brands</dt><dd>{product.compatibleBrands.join(" · ")}</dd></div>
               <div><dt>Replacement numbers</dt><dd>{product.replacementNumbers.join(" · ")}</dd></div>
-              <div><dt>Bag type</dt><dd>{product.productType}</dd></div>
+              <div><dt>{isDryerProduct ? "Product type" : "Bag type"}</dt><dd>{product.productType}</dd></div>
               <div><dt>Material</dt><dd>{product.material}</dd></div>
               <div><dt>Packaging</dt><dd>Pack count and private-label requirements confirmed with quotation</dd></div>
             </dl>
@@ -312,8 +319,10 @@ export default async function ProductOrSubcategoryPage({ params }: { params: Pro
         <section className="product-gallery-section">
           <div className="shell">
             <div className="section-heading product-heading">
-              <div><span className="eyebrow">STYLE-MATCHED PRODUCT IMAGES</span><h2>Details from the same bag family.</h2></div>
-              <p>Every image below comes from the folder matched to this replacement reference. Angle, collar and pack views are not mixed across styles.</p>
+              <div><span className="eyebrow">VERIFIED PRODUCT DETAILS</span><h2>{isDryerProduct ? "Frame, mesh and guide details for this reference." : "Details from the same bag family."}</h2></div>
+              <p>{isDryerProduct
+                ? "Every image below belongs to this dryer-filter reference. Product angles and detail views are not mixed between similar-looking frames."
+                : "Every image below comes from the folder matched to this replacement reference. Angle, collar and pack views are not mixed across styles."}</p>
             </div>
             <div className="product-gallery-grid">
               {product.gallery.map((image, index) => (
@@ -334,7 +343,7 @@ export default async function ProductOrSubcategoryPage({ params }: { params: Pro
             <p className="fit-check-note">{product.compatibilityNote}</p>
             <p className="compatibility-disclaimer"><b>Compatibility notice.</b> Manufacturer names, model numbers and part references are used solely to identify compatibility. JC Filters supplies independent replacement products and is not affiliated with, sponsored by or endorsed by the referenced manufacturers.</p>
             <div className="product-internal-links" role="navigation" aria-label="Related product and service links">
-              <Link href={subcategoryPath}>Browse all {subcategoryTitle}<span>→</span></Link>
+              <Link href={catalogPath}>Browse all {hasSubcategoryRoute ? subcategoryTitle : category.title}<span>→</span></Link>
               <Link href="/services/ready-stock">Ready-stock process<span>→</span></Link>
               <Link href="/services/fba-service">FBA preparation<span>→</span></Link>
               <Link href="/services/custom-packaging">Custom packaging<span>→</span></Link>
@@ -343,10 +352,12 @@ export default async function ProductOrSubcategoryPage({ params }: { params: Pro
         </div>
       </section>
 
-      {relatedProducts.length > 0 && <section className="related-product-section"><div className="shell"><div className="section-heading product-heading"><div><span className="eyebrow">RELATED VACUUM DUST BAGS</span><h2>Continue by reference family.</h2></div><Link className="text-link" href={subcategoryPath}>View all {subcategoryTitle} <span>→</span></Link></div><div className="product-grid related-product-grid">{relatedProducts.map((item) => <CatalogProductCard key={item.slug} product={item} />)}</div></div></section>}
+      {relatedProducts.length > 0 && <section className="related-product-section"><div className="shell"><div className="section-heading product-heading"><div><span className="eyebrow">{isDryerProduct ? "RELATED DRYER FILTERS" : "RELATED VACUUM DUST BAGS"}</span><h2>Continue by reference family.</h2></div><Link className="text-link" href={catalogPath}>View all {hasSubcategoryRoute ? subcategoryTitle : category.title} <span>→</span></Link></div><div className="product-grid related-product-grid">{relatedProducts.map((item) => <CatalogProductCard key={item.slug} product={item} />)}</div></div></section>}
       <ContactBand
         title="Request fit confirmation and quotation."
-        text="Send the required quantity, destination, current bag or machine reference, and any FBA or private-label packaging requirements."
+        text={isDryerProduct
+          ? "Send the required quantity, destination, dryer model or part number, and any FBA or private-label packaging requirements."
+          : "Send the required quantity, destination, current bag or machine reference, and any FBA or private-label packaging requirements."}
         requestContext={`${product.name} | Reference: ${product.reference}`}
       />
     </PageShell>

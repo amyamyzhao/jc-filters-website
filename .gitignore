@@ -38,3 +38,26 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# local catalog production workspaces and source material
+/.catalog_work/
+/.water-filter-work/
+/.waterfilter_work/
+/JC素材包/
+/_dryer_batch/
+/_dryer_filter_work_0919/
+/_hepa_work/
+/_skill_update_alibaba_water_filter/
+/_water_filter_work/
+/_waterfilter_200_work/
+/_waterfilter_work/
+/_we18m28_corrected/
+/_work_vt265/
+/lead-discovery-app/
+/output/
+/water_filter_work/
+/00_*.pdf
+/*亚马逊适配清单*.xlsx
+/*.xlsx.inspect.ndjson
+/public/assets/jc/category-vacuum-filter-dust-bag-hero-v2.png
+/public/assets/jc/category-vacuum-filter-dust-bag-hero-v3.png
