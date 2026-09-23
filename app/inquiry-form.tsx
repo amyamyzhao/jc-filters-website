@@ -6,7 +6,7 @@ import { contact, whatsappLink } from "./site-data";
 type SubmissionState = "idle" | "sending" | "success" | "error";
 type SubmittedRequest = { name: string; email: string; request: string };
 
-export function InquiryForm({ accessKey }: { accessKey: string }) {
+export function InquiryForm({ accessKey, requestContext }: { accessKey: string; requestContext?: string }) {
   const [state, setState] = useState<SubmissionState>("idle");
   const [message, setMessage] = useState("");
   const [submittedRequest, setSubmittedRequest] = useState<SubmittedRequest | null>(null);
@@ -19,7 +19,7 @@ export function InquiryForm({ accessKey }: { accessKey: string }) {
       const name = String(formData.get("name") ?? "");
       const email = String(formData.get("email") ?? "");
       const request = String(formData.get("message") ?? "");
-      const subject = "B2B filter inquiry from JC Filters website";
+      const subject = requestContext ? `JC Filters inquiry: ${requestContext}` : "B2B filter inquiry from JC Filters website";
       const body = [
         `Name: ${name}`,
         `Work email: ${email}`,
@@ -42,11 +42,12 @@ export function InquiryForm({ accessKey }: { accessKey: string }) {
     const customerEmail = String(formData.get("email") ?? "").trim();
     const customerRequest = String(formData.get("message") ?? "").trim();
     formData.set("access_key", accessKey);
-    formData.set("subject", "New B2B filter inquiry from JC Filters website");
+    formData.set("subject", requestContext ? `JC Filters inquiry: ${requestContext}` : "New B2B filter inquiry from JC Filters website");
     formData.set("from_name", "JC Filters Website");
     formData.set("replyto", customerEmail);
     formData.set("Customer Reply Email", customerEmail);
     formData.set("Page URL", window.location.href);
+    if (requestContext) formData.set("Product Context", requestContext);
 
     setState("sending");
     setMessage("Sending your inquiry…");
@@ -124,7 +125,13 @@ export function InquiryForm({ accessKey }: { accessKey: string }) {
       </div>
       <label className="inquiry-form-message">
         <span>Product request</span>
-        <textarea name="message" rows={2} placeholder="Product / part no., quantity, destination and packing needs" required />
+        <textarea
+          name="message"
+          rows={2}
+          placeholder="Product / part no., quantity, destination and packing needs"
+          defaultValue={requestContext ? `${requestContext}\nQuantity: \nDestination: \nPacking requirements: ` : ""}
+          required
+        />
       </label>
       <button type="submit" disabled={state === "sending"}>
         {state === "sending" ? "Sending…" : accessKey ? "Send product request" : "Continue by email"}<span aria-hidden="true">→</span>

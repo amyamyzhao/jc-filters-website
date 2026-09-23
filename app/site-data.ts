@@ -75,8 +75,9 @@ export const categories: Category[] = [
     description: "Vacuum HEPA filters, foam filter sets and non-woven dust bags prepared for model matching and seller-ready packs.",
     matching: "Vacuum model · OEM reference · filter / collar type · pack count",
     shape: "panel",
-    image: "/assets/jc/category-vacuum-hepa-family-white.webp",
-    subImages: ["/assets/jc/category-vacuum-hepa-family-white.webp", "/assets/jc/category-dust-bag-family-white.webp"],
+    // Dust-bag family artwork must always use the approved upright orientation.
+    image: "/assets/jc/category-vacuum-filter-dust-bag-hero-wide-v4.png",
+    subImages: ["/assets/jc/category-vacuum-hepa-family-white.webp", "/assets/jc/category-dust-bag-family-upright-v2.png"],
     subcategories: ["Vacuum HEPA Filters", "Vacuum Dust Bags"],
     compatibleBrands: ["Dyson", "Miele", "Electrolux", "Eureka", "AEG", "Vorwerk / Kobold", "Kärcher", "Philips", "Hoover", "Cecotec"],
     referenceExamples: ["Vacuum brand", "Machine model", "Filter or bag reference", "Collar shape and pack count"],

@@ -94,11 +94,14 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       <section className="catalog-section">
         <div className="shell">
           <div className="section-heading product-heading">
-            <div><span className="eyebrow">PRODUCT CATALOG</span><h2>A clean structure, ready for product records.</h2></div>
-            <p>Products will appear here after their images, replacement references and complete compatibility lists are matched. New models can then be added continuously within this category.</p>
+            <div><span className="eyebrow">PRODUCT CATALOG</span><h2>{categoryProducts.length ? "Verified product records for this category." : "A clean structure, ready for product records."}</h2></div>
+            <p>{categoryProducts.length ? "Published records use checked replacement references and compatible-model data. Availability and final physical fit are confirmed before quotation." : "Products will appear here after their images, replacement references and complete compatibility lists are matched. New models can then be added continuously within this category."}</p>
           </div>
           {categoryProducts.length ? (
-            <div className="product-grid range-grid">{categoryProducts.map((product) => <CatalogProductCard key={product.slug} product={product} />)}</div>
+            <>
+              <div className="product-grid range-grid">{categoryProducts.map((product) => <CatalogProductCard key={product.slug} product={product} />)}</div>
+              <p className="catalog-compatibility-notice">Compatibility notice: manufacturer names, model numbers and part references identify fit only. JC Filters supplies independent replacement products and is not affiliated with, sponsored by or endorsed by the referenced manufacturers.</p>
+            </>
           ) : (
             <div className="catalog-ready-panel">
               <div className="catalog-ready-copy"><span>CATALOG STATUS</span><h3>Product pages are being prepared.</h3><p>In the meantime, send a brand, model number, part reference or clear photo for a direct match.</p></div>

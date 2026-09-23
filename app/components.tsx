@@ -49,6 +49,7 @@ export function Header() {
             <Link href="/services/fba-service">FBA Services</Link>
             <Link href="/services/ready-stock">Ready Stock</Link>
             <Link href="/services/custom-packaging">OEM &amp; ODM</Link>
+            <Link href="/blog">Blog</Link>
             <Link href="/about">About</Link>
           </nav>
           <details className="mobile-menu">
@@ -75,6 +76,7 @@ export function Header() {
               <Link href="/services/fba-service">FBA Services</Link>
               <Link href="/services/ready-stock">Ready Stock</Link>
               <Link href="/services/custom-packaging">OEM &amp; ODM</Link>
+              <Link href="/blog">Blog</Link>
               <Link href="/about">About JC</Link>
               <Link href="/contact">Contact</Link>
               <a className="mobile-wa" href={whatsappLink("Hello, I would like to discuss replacement filter sourcing.")} target="_blank" rel="noopener noreferrer" aria-label="Start a WhatsApp inquiry"><WhatsAppIcon /></a>
@@ -98,6 +100,7 @@ export function Footer() {
         <div>
           <h4>Products</h4>
           {categories.map((item) => <Link key={item.slug} href={`/products/${item.slug}`}>{item.title}</Link>)}
+          <Link href="/blog">Buying guides</Link>
         </div>
         <div>
           <h4>Services</h4>
@@ -153,23 +156,35 @@ export function CatalogProductCard({ product }: { product: ProductRecord }) {
     <article className="product-card">
       <Link className="product-media" href={`/products/${product.categorySlug}/${product.slug}`}>
         <span className="slot-label">{product.readyStock ? "READY STOCK" : "CHECK AVAILABILITY"}</span>
-        <img src={product.primaryImage} alt={product.name} />
+        {product.primaryImage ? (
+          <img src={product.primaryImage} alt={product.imageAlt || product.name} />
+        ) : (
+          <span className="verified-image-pending" role="img" aria-label={`Verified product photo pending for ${product.reference}`}>
+            <small>VERIFIED PHOTO PENDING</small>
+            <b>{product.reference}</b>
+            <em>No substitute image shown</em>
+          </span>
+        )}
       </Link>
       <div className="product-info">
-        <span className="card-kicker">SKU / {product.sku}</span>
+        <span className="card-kicker">REFERENCE / {product.reference}</span>
         <h3><Link href={`/products/${product.categorySlug}/${product.slug}`}>{product.name}</Link></h3>
         <dl>
           <div><dt>Compatible brands</dt><dd>{product.compatibleBrands.slice(0, 3).join(" · ")}</dd></div>
           <div><dt>Replacement no.</dt><dd>{product.replacementNumbers.slice(0, 2).join(" · ")}</dd></div>
           <div><dt>Supply support</dt><dd>FBA · custom pack</dd></div>
         </dl>
-        <a className="card-inquiry" href={whatsappLink(`Hello JC Filters, I am asking about ${product.name}, SKU ${product.sku}.`)} target="_blank" rel="noopener noreferrer">Ask about this product <span>↗</span></a>
+        <a className="card-inquiry" href={whatsappLink(`Hello JC Filters, I am asking about ${product.name}, reference ${product.reference}.`)} target="_blank" rel="noopener noreferrer">Ask about this product <span>↗</span></a>
       </div>
     </article>
   );
 }
 
-export function ContactBand({ title = "Have a part list ready?", text = "Send the current reference, dimensions, quantity and destination. We’ll use them to structure the next sourcing conversation." }: { title?: string; text?: string }) {
+export function ContactBand({
+  title = "Have a part list ready?",
+  text = "Send the current reference, dimensions, quantity and destination. We’ll use them to structure the next sourcing conversation.",
+  requestContext,
+}: { title?: string; text?: string; requestContext?: string }) {
   const web3FormsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
 
   return (
@@ -177,8 +192,8 @@ export function ContactBand({ title = "Have a part list ready?", text = "Send th
       <div className="shell contact-band-grid">
         <div><span className="eyebrow light">DIRECT INQUIRY</span><h2>{title}</h2><p>{text}</p></div>
         <div className="contact-actions">
-          <InquiryForm accessKey={web3FormsAccessKey} />
-          <a className="email-link" href={`mailto:${contact.email}`}>{contact.email}</a>
+          <InquiryForm accessKey={web3FormsAccessKey} requestContext={requestContext} />
+          <a className="email-link" href={`mailto:${contact.email}${requestContext ? `?subject=${encodeURIComponent(`JC Filters inquiry: ${requestContext}`)}` : ""}`}>{contact.email}</a>
         </div>
       </div>
     </section>
